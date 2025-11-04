@@ -1,0 +1,40 @@
+@startuml
+
+skinparam maxmessagesize 150
+
+autoactivate on
+
+autonumber
+
+
+actor User
+
+participant "Мобильное приложение" as MB
+participant Api
+participant DB
+
+
+User -> MB : Клиент запросил список доступных моек
+
+alt Базовый сценарий
+
+MB -> Api : GET запрос к руске /api/city/100/washers
+Api -> DB : Обращение к бд
+DB -> DB : Поиск моек по ID города
+Api <-- DB : Выборка со списком моек
+Api -> Api : Формирование ответа со списком моек
+note right Api
+Если не нашли мойки , то список "washers" 
+содержит 0 элементов (не указывается null, 
+явно указать [])
+end note
+MB <-- Api : Ответ со списком моек
+User <-- MB : Отображает форму со списком
+
+else Ошибка сервера
+
+User <-- MB : Отображает ошибку на сервере
+
+end
+
+@enduml

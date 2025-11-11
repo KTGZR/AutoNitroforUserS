@@ -1,40 +1,65 @@
 @startuml
 
 skinparam maxmessagesize 150
-
 autoactivate on
-
 autonumber
 
-
 actor User
-
 participant "Мобильное приложение" as MB
 participant Api
 participant DB
-
+participant "Внешний платежный шлюз" as Payment
+participant "1С" as OneC
 
 User -> MB : Клиент запросил список доступных моек
-
-alt Базовый сценарий
-
-MB -> Api : GET запрос к руске /api/city/100/washers
-Api -> DB : Обращение к бд
+MB -> Api : GET /api/city/{cityId}/washers
+Api -> DB : Запрос данных по городу и мойкам
 DB -> DB : Поиск моек по ID города
-Api <-- DB : Выборка со списком моек
-Api -> Api : Формирование ответа со списком моек
+Api <-- DB : Возврат списка моек
+Api -> Api : Формирование ответа
 note right Api
-Если не нашли мойки , то список "washers" 
-содержит 0 элементов (не указывается null, 
-явно указать [])
+Если не нашли мойки, то список "washers" 
+содержит 0 элементов (не null)
 end note
 MB <-- Api : Ответ со списком моек
-User <-- MB : Отображает форму со списком
+User <-- MB : Отображает список моек
 
-else Ошибка сервера
+User -> MB : Выбирает мойку → дату/время → бокс
+MB -> Api : GET /api/washers/{washerId}/boxes?date=2025-01-01
+Api -> DB : Запрос боксов и их занятости
+DB <-- Api : Список свободных/занятых боксов
+MB <-- Api : Отображает свободные боксы
 
-User <-- MB : Отображает ошибку на сервере
+User -> MB : Выбирает бокс и услуги
+MB -> Api : POST /api/orders (с телом: user_id, washer_id, box_id, services[])
+Api -> DB : Проверка доступности бокса
+Api -> Api : Расчёт цены (с учётом размера машины, акций)
+MB <-- Api : Итоговая цена
 
-end
+User -> MB : Подтверждает заказ → оплату
+MB -> Payment : Инициировать оплату
+Payment -> Payment : Обработка платежа
+Payment --> MB : Статус оплаты (успех/ошибка)
+MB -> Api : PUT /api/orders/{orderId}/payment_status (paid)
+Api -> DB : Обновить статус оплаты
+Api -> OneC : Отправить данные заказа
+OneC --> Api : Подтверждение получения
+
+MB <-- Api : Уведомление: "Заказ подтверждён"
+User <-- MB : Отображение подтверждения
+
+User -> MB : Отмена заказа (до начала мойки)
+MB -> Api : DELETE /api/orders/{orderId}
+Api -> DB : Проверить статус (если не "in_progress")
+DB -> DB : Обновить статус на "cancelled"
+Api --> MB : Отмена подтверждена
+User <-- MB : Уведомление об отмене
+
+User -> MB : Оставить отзыв после мойки
+MB -> Api : POST /api/orders/{orderId}/feedback (rating, comment, photo)
+Api -> DB : Сохранить отзыв
+Api -> Api : Обновить рейтинг мойщика
+Api --> MB : Отзыв принят
+User <-- MB : Уведомление: "Спасибо за отзыв!"
 
 @enduml

@@ -5,8 +5,34 @@ info:
 tags:
   - name: Cars
     description: Операции в отношении списка хранимых машин.
+  - name: Users
+    description: Операции с пользователями.
+  - name: Orders
+    description: Операции с заказами.
+  - name: WashStations
+    description: Операции с автомойками.
+  - name: Boxes
+    description: Управление боксами.
+  - name: Services
+    description: Управление услугами.
+  - name: Actions
+    description: Управление акциями.
+  - name: Feedbacks
+    description: Управление отзывами и рейтингами.
+  - name: Payments
+    description: Управление оплатой.
+  - name: OneC
+    description: Интеграция с 1С.
+  - name: Notifications
+    description: Управление уведомлениями.
+  - name: VIP
+    description: Управление VIP/Blacklist.
+  - name: Predictions
+    description: Прогнозы загруженности.
+
 servers:
   - url: http://localhost:3000/api/v1
+
 paths:
   /users/{userId}/cars:
     get:
@@ -70,9 +96,449 @@ paths:
           $ref: "#/components/responses/NotFound"
         '403':
           $ref: "#/components/responses/Unauthorized"
-      
 
+  /users:
+    get:
+      summary: Получить список пользователей.
+      tags:
+        - Users
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserWId"
+    post:
+      summary: Зарегистрировать нового пользователя.
+      tags:
+        - Users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserWOId"
+      responses:
+        '200':
+          description: Пользователь успешно создан.
+        '400':
+          $ref: "#/components/responses/BadRequest"
+  /users/{userId}:
+    get:
+      summary: Получить информацию о пользователе.
+      tags:
+        - Users
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserWId"
+        '404':
+          $ref: "#/components/responses/NotFound"
+        '403':
+          $ref: "#/components/responses/Unauthorized"
+    put:
+      summary: Обновить информацию о пользователе.
+      tags:
+        - Users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserWId"
+      responses:
+        '200':
+          description: Пользователь обновлён.
+        '404':
+          $ref: "#/components/responses/NotFound"
+        '403':
+          $ref: "#/components/responses/Unauthorized"
+    delete:
+      summary: Удалить пользователя.
+      tags:
+        - Users
+      responses:
+        '200':
+          description: Пользователь удалён.
+        '404':
+          $ref: "#/components/responses/NotFound"
+        '403':
+          $ref: "#/components/responses/Unauthorized"
 
+  /orders:
+    get:
+      summary: Получить список заказов.
+      tags:
+        - Orders
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/OrderWId"
+    post:
+      summary: Создать новый заказ.
+      tags:
+        - Orders
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrderWOId"
+      responses:
+        '200':
+          description: Заказ создан.
+        '400':
+          $ref: "#/components/responses/BadRequest"
+  /orders/{orderId}:
+    get:
+      summary: Получить информацию о заказе.
+      tags:
+        - Orders
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderWId"
+        '404':
+          $ref: "#/components/responses/NotFound"
+        '403':
+          $ref: "#/components/responses/Unauthorized"
+    put:
+      summary: Обновить заказ (например, статус).
+      tags:
+        - Orders
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrderWId"
+      responses:
+        '200':
+          description: Заказ обновлён.
+        '404':
+          $ref: "#/components/responses/NotFound"
+        '403':
+          $ref: "#/components/responses/Unauthorized"
+    delete:
+      summary: Отменить заказ (до начала выполнения).
+      tags:
+        - Orders
+      responses:
+        '200':
+          description: Заказ отменён.
+        '400':
+          description: Невозможно отменить — уже в работе.
+
+  /washstations:
+    get:
+      summary: Получить список автомоек.
+      tags:
+        - WashStations
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/WashStationWId"
+    post:
+      summary: Создать новую автомойку.
+      tags:
+        - WashStations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WashStationWOId"
+      responses:
+        '200':
+          description: Автомойка создана.
+        '400':
+          $ref: "#/components/responses/BadRequest"
+  /washstations/{stationId}:
+    get:
+      summary: Получить информацию об автомойке.
+      tags:
+        - WashStations
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WashStationWId"
+        '404':
+          $ref: "#/components/responses/NotFound"
+        '403':
+          $ref: "#/components/responses/Unauthorized"
+
+  /washstations/{stationId}/boxes:
+    get:
+      summary: Получить список боксов автомойки.
+      tags:
+        - Boxes
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BoxWId"
+    post:
+      summary: Добавить бокс.
+      tags:
+        - Boxes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BoxWOId"
+      responses:
+        '200':
+          description: Бокс добавлен.
+        '400':
+          $ref: "#/components/responses/BadRequest"
+
+  /services:
+    get:
+      summary: Получить список доступных услуг.
+      tags:
+        - Services
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ServiceWId"
+    post:
+      summary: Добавить новую услугу.
+      tags:
+        - Services
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ServiceWOId"
+      responses:
+        '200':
+          description: Услуга добавлена.
+        '400':
+          $ref: "#/components/responses/BadRequest"
+
+  /actions:
+    get:
+      summary: Получить список акций.
+      tags:
+        - Actions
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ActionWId"
+    post:
+      summary: Создать новую акцию.
+      tags:
+        - Actions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ActionWOId"
+      responses:
+        '200':
+          description: Акция создана.
+        '400':
+          $ref: "#/components/responses/BadRequest"
+
+  /orders/{orderId}/feedback:
+    post:
+      summary: Оставить отзыв и рейтинг к заказу.
+      tags:
+        - Feedbacks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FeedbackWOId"
+      responses:
+        '200':
+          description: Отзыв добавлен.
+        '400':
+          $ref: "#/components/responses/BadRequest"
+  /washers/{washerId}/rating:
+    get:
+      summary: Получить средний рейтинг мойщика.
+      tags:
+        - Feedbacks
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: number
+                example: 4.5
+
+  /orders/{orderId}/payment:
+    get:
+      summary: Получить статус оплаты заказа.
+      tags:
+        - Payments
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: { type: string, example: "paid" }
+    post:
+      summary: Совершить оплату заказа.
+      tags:
+        - Payments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount: { type: number }
+                method: { type: string, example: "card" }
+      responses:
+        '200':
+          description: Оплачено.
+        '400':
+          $ref: "#/components/responses/BadRequest"
+
+  /1c/orders:
+    post:
+      summary: Отправить заказ в 1С.
+      tags:
+        - OneC
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrderWId"
+      responses:
+        '200':
+          description: Заказ отправлен в 1С.
+        '500':
+          description: Ошибка интеграции с 1С.
+  /1c/orders/{orderId}:
+    put:
+      summary: Обновить статус заказа в 1С.
+      tags:
+        - OneC
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status: { type: string }
+      responses:
+        '200':
+          description: Статус обновлён.
+
+  /vip:
+    get:
+      summary: Получить список VIP/Blacklist пользователей.
+      tags:
+        - VIP
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    userId: { type: string }
+                    type: { type: string, enum: ["vip", "blacklist"] }
+    post:
+      summary: Добавить пользователя в VIP/Blacklist.
+      tags:
+        - VIP
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId: { type: string }
+                type: { type: string, enum: ["vip", "blacklist"] }
+      responses:
+        '200':
+          description: Пользователь добавлен.
+
+  /notifications:
+    get:
+      summary: Получить список уведомлений пользователя.
+      tags:
+        - Notifications
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id: { type: string }
+                    title: { type: string }
+                    message: { type: string }
+                    read: { type: boolean }
+
+  /washstations/{stationId}/prediction:
+    get:
+      summary: Прогноз загруженности автомойки.
+      tags:
+        - Predictions
+      parameters:
+        - name: hours
+          in: query
+          schema:
+            type: integer
+            default: 24
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    timestamp: { type: string, format: date-time }
+                    load: { type: number, example: 0.75 }
 
 components:
   schemas:
@@ -123,6 +589,260 @@ components:
       allOf:
         - $ref: '#/components/schemas/CommonCarFields'
         - type: object
+
+    UserWId:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "d67082e5-1a28-4534-8166-12c2a1abebc2"
+        phone:
+          type: string
+          example: "+79123456789"
+        login:
+          type: string
+          example: "user123"
+        is_vip:
+          type: boolean
+          default: false
+        blacklist:
+          type: boolean
+          default: false
+    UserWOId:
+      type: object
+      required:
+        - phone
+      properties:
+        phone:
+          type: string
+          example: "+79123456789"
+        login:
+          type: string
+          example: "user123"
+
+    OrderWId:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 12345
+        client_id:
+          type: string
+          format: uuid
+          example: "d67082e5-1a28-4534-8166-12c2a1abebc2"
+        car_id:
+          type: integer
+          example: 111111
+        service_list:
+          type: array
+          items:
+            type: string
+        total_price:
+          type: number
+          example: 1200.00
+        timestamp:
+          type: string
+          format: date-time
+        status:
+          type: string
+          example: "booked"
+        box_id:
+          type: integer
+          example: 5
+        wash_station_id:
+          type: integer
+          example: 1
+        payment_status:
+          type: string
+          example: "paid"
+    OrderWOId:
+      type: object
+      required:
+        - client_id
+        - car_id
+        - service_list
+        - timestamp
+      properties:
+        client_id:
+          type: string
+          format: uuid
+          example: "d67082e5-1a28-4534-8166-12c2a1abebc2"
+        car_id:
+          type: integer
+          example: 111111
+        service_list:
+          type: array
+          items:
+            type: string
+        timestamp:
+          type: string
+          format: date-time
+        box_id:
+          type: integer
+        wash_station_id:
+          type: integer
+
+    WashStationWId:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        city:
+          type: string
+          example: "Южно-Сахалинск"
+        address:
+          type: string
+          example: "ул. Ленина, 10"
+        open_time:
+          type: string
+          format: time
+          example: "09:00:00"
+        close_time:
+          type: string
+          format: time
+          example: "21:00:00"
+        total_boxes:
+          type: integer
+          example: 10
+    WashStationWOId:
+      type: object
+      required:
+        - city
+        - address
+        - open_time
+        - close_time
+        - total_boxes
+      properties:
+        city:
+          type: string
+          example: "Южно-Сахалинск"
+        address:
+          type: string
+          example: "ул. Ленина, 10"
+        open_time:
+          type: string
+          format: time
+          example: "09:00:00"
+        close_time:
+          type: string
+          format: time
+          example: "21:00:00"
+        total_boxes:
+          type: integer
+          example: 10
+
+    BoxWId:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        wash_station_id:
+          type: integer
+          example: 1
+        status:
+          type: string
+          example: "free"
+    BoxWOId:
+      type: object
+      required:
+        - wash_station_id
+      properties:
+        wash_station_id:
+          type: integer
+          example: 1
+
+    ServiceWId:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Мойка кузова"
+        price:
+          type: number
+          example: 500.00
+        duration:
+          type: integer
+          example: 10
+    ServiceWOId:
+      type: object
+      required:
+        - name
+        - price
+        - duration
+      properties:
+        name:
+          type: string
+          example: "Мойка кузова"
+        price:
+          type: number
+          example: 500.00
+        duration:
+          type: integer
+          example: 10
+
+    ActionWId:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Чистый четверг"
+        discount:
+          type: number
+          example: 0.2
+        start_date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+    ActionWOId:
+      type: object
+      required:
+        - name
+        - discount
+        - start_date
+        - end_date
+      properties:
+        name:
+          type: string
+          example: "Чистый четверг"
+        discount:
+          type: number
+          example: 0.2
+        start_date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+
+    FeedbackWOId:
+      type: object
+      required:
+        - rating
+        - comment
+      properties:
+        rating:
+          type: integer
+          minimum: 1
+          maximum: 5
+          example: 5
+        comment:
+          type: string
+          example: "Всё отлично!"
+        photo_url:
+          type: string
+          example: "https://example.com/photo.jpg"
+
     Error:
       type: object
       properties:
@@ -134,6 +854,8 @@ components:
           type: string
   responses:
     NotFound:
-      description: Сущность не найден.
+      description: Сущность не найдена.
     Unauthorized:
       description: Неавторизованный доступ.
+    BadRequest:
+      description: Неверный запрос.

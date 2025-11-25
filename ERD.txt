@@ -1,37 +1,97 @@
+// dbdiagram.io
 
-
-// Table posts {
-//   id integer [primary key]
-//   title varchar
-//   body text [note: 'Content of the post']
-//   user_id integer [not null]
-//   status varchar
-//   created_at timestamp
-// }
-Table client{
-  id integer [primary key]
-  firstname varchar(50)
-  surname varchar(50)
+Table client {
+  id int [primary key]
+  firstname text
+  surname text
+  sex int
+  lastname text
   phone_number text
-
 }
-Table Auto{
+
+Table car {
   id integer [primary key]
+  type text
+  weight float
+  height float
+  gos_number text
+}
+Table client_auto {
+client_id integer
+car_id integer
 }
 
-Table Clien_x_Auto{
-  Client_ID integer
-  Car_ID integer
-}
-
-Table WashBox{
-  id inteter [primary key]
-
-}
-
-Table Worker{
+Table offer {
   id integer [primary key]
+  client_id int
+  car_id int
+  status varchar
+  box_id int
+  wosher_id int
+  service_id int
+  create_date date
+  confirm_date date
 }
-//Ref user_posts: posts.user_id > users.id // many-to-one
 
+Table workers{
+  id integer [primary key]
+  firstname text
+  surname text
+  lastname text
+  inn integer
+  snils text
+  sex int
+  phone_number text
+  birthdate date
+  dolzhnost text
+  washing_id int
+}
 
+table services{
+  id int [primary key]
+  price float
+  name text
+  washing_id int
+}
+table boxes{
+  id int [primary key]
+  max_weight float
+  max_height float
+  status text
+  washing_id int
+}
+
+table washing{
+  id integer [primary key]
+  city_id integer
+  status text
+  start_time time
+  end_time time
+  director_id int
+}
+
+table cities{
+  id integer
+  district_id int
+  name text
+  washing_count int
+}
+
+table districts{
+  id integer
+  name text
+  washing_count int
+}
+
+Ref: client.id < client_auto.client_id
+Ref: car.id < client_auto.client_id
+Ref: client.id < offer.client_id
+Ref: car.id < offer.car_id
+Ref: offer.wosher_id - workers.id
+Ref: offer.service_id - services.id
+Ref: offer.box_id - boxes.id
+Ref: workers.washing_id > washing.id
+Ref: services.washing_id > washing.id
+Ref: boxes.washing_id > washing.id
+Ref: cities.id < washing.city_id
+Ref: cities.district_id < districts.id

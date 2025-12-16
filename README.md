@@ -167,11 +167,11 @@
 |-----------|-----------|-----------|
 | 1  | Техническое задание  | [README.md](https://github.com/KTGZR/AutoWashing/blob/main/README.md)  |
 | 2  | Диаграмма последовательности  | [sequence diagramm.uml](https://github.com/KTGZR/AutoWashing/blob/main/sequence%20diagramm.uml)<br><img src="https://github.com/KTGZR/AutoWashing/blob/main/sequance%20diagramm.svg" width="100px" height="100px">  |
-| 3  | ERD-диаграмма  | [ERD.txt](https://github.com/KTGZR/AutoWashing/blob/main/ERD.txt)  |
-| 4  | UseCase-диаграмма  | [UseCase.uml](https://github.com/KTGZR/AutoWashing/blob/main/UseCase.uml)  |
+| 3  | ERD-диаграмма  | [ERD.txt](https://github.com/KTGZR/AutoWashing/blob/main/ERD.txt)<br><img src="https://github.com/KTGZR/AutoWashing/blob/main/ERD.svg" width="100px" height="100px">  |
+| 4  | UseCase-диаграмма  | [UseCase.uml](https://github.com/KTGZR/AutoWashing/blob/main/UseCase.uml)<br><img src="https://github.com/KTGZR/AutoWashing/blob/main/UseCase.svg" width="100px" height="100px">  |
 | 5  | User Story  | [UsersStories.docx](https://github.com/KTGZR/AutoWashing/blob/main/UsersStories.docx)  |
-| 6  | Story Mapping  | [StoryMapping.svg](https://github.com/KTGZR/AutoWashing/blob/main/StoryMapping.svg)  |
-| 7 | Статусная модель  | [StatusModel.uml](https://github.com/KTGZR/AutoWashing/blob/main/StatusModel.uml)  |
+| 6  | Story Mapping  | [StoryMapping.svg](https://github.com/KTGZR/AutoWashing/blob/main/StoryMapping.svg)<br><img src="https://github.com/KTGZR/AutoWashing/blob/main/StoryMapping.svg" width="100px" height="100px">  |
+| 7 | Статусная модель  | [StatusModel.uml](https://github.com/KTGZR/AutoWashing/blob/main/StatusModel.uml)<br><img src="https://github.com/KTGZR/AutoWashing/blob/main/StatusModel.svg" width="100px" height="100px">  |
 | 8 | Open Api  | [api-docs.yaml](https://github.com/KTGZR/AutoWashing/blob/main/api-docs.yaml)  |
-| 9 | Модель C4  | [C4Model.png](https://github.com/KTGZR/AutoWashing/blob/main/C4Model.png)  |
+| 9 | Модель C4  | [C4Model.png](https://github.com/KTGZR/AutoWashing/blob/main/C4Model.png)<br><img src="https://github.com/KTGZR/AutoWashing/blob/main/C4Model.png" width="100px" height="100px">  |
 

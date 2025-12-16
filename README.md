@@ -166,7 +166,7 @@
 | № | Компонент | Файлы |
 |-----------|-----------|-----------|
 | 1  | Техническое задание  | [README.md](https://github.com/KTGZR/AutoWashing/blob/main/README.md)  |
-| 2  | Диаграмма последовательности  | [sequence diagramm.uml](https://github.com/KTGZR/AutoWashing/blob/main/sequence%20diagramm.uml)  |
+| 2  | Диаграмма последовательности  | [sequence diagramm.uml](https://github.com/KTGZR/AutoWashing/blob/main/sequence%20diagramm.uml)<br><img src="https://github.com/KTGZR/AutoWashing/blob/main/sequance%20diagramm.svg" width="100px" height="100px">  |
 | 3  | ERD-диаграмма  | [ERD.txt](https://github.com/KTGZR/AutoWashing/blob/main/ERD.txt)  |
 | 4  | UseCase-диаграмма  | [UseCase.uml](https://github.com/KTGZR/AutoWashing/blob/main/UseCase.uml)  |
 | 5  | User Story  | [UsersStories.docx](https://github.com/KTGZR/AutoWashing/blob/main/UsersStories.docx)  |

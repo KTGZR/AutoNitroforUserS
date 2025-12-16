@@ -167,4 +167,11 @@
 |-----------|-----------|-----------|
 | 1  | Техническое задание  | [README.md](https://github.com/KTGZR/AutoWashing/blob/main/README.md)  |
 | 2  | Диаграмма последовательности  | [sequence diagramm.uml](https://github.com/KTGZR/AutoWashing/blob/main/sequence%20diagramm.uml)  |
-| 3  | ERD-диаграмма  | [ERD.txt]([https://github.com/KTGZR/AutoWashing/blob/main/README.md](https://github.com/KTGZR/AutoWashing/blob/main/ERD.txt))  |
+| 3  | ERD-диаграмма  | [ERD.txt](https://github.com/KTGZR/AutoWashing/blob/main/ERD.txt)  |
+| 4  | UseCase-диаграмма  | [UseCase.uml](https://github.com/KTGZR/AutoWashing/blob/main/UseCase.uml)  |
+| 5  | User Story  | [UsersStories.docx](https://github.com/KTGZR/AutoWashing/blob/main/UsersStories.docx)  |
+| 6  | Story Mapping  | [StoryMapping.svg](https://github.com/KTGZR/AutoWashing/blob/main/StoryMapping.svg)  |
+| 7 | Статусная модель  | [StatusModel.uml](https://github.com/KTGZR/AutoWashing/blob/main/StatusModel.uml)  |
+| 8 | Open Api  | [api-docs.yaml](https://github.com/KTGZR/AutoWashing/blob/main/api-docs.yaml)  |
+| 9 | Модель C4  | [C4Model.png](https://github.com/KTGZR/AutoWashing/blob/main/C4Model.png)  |
+
